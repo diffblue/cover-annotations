@@ -24,8 +24,6 @@
   <name>Cover Annotations</name>
   <description>
     Annotations for end users to enable fine-grained control of Diffblue Cover.
-    There are some expectations of open-sourcing the annotations and so module
-    contents must be kept free of intellectual property.
   </description>
   <url>https://www.diffblue.com/</url>
 
