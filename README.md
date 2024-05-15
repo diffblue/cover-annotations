@@ -105,3 +105,156 @@ public class ClassUnderTest {
 }
 ```
 
+### Using `@InTestsUseClasses`
+
+The `@InTestsUseClasses` annotation allows the user to recommend specific `Class` literal values to use in tests.
+Sometimes this can be useful to control the values used for cosmetic reasons, but it can also be useful when Cover is unable to identify values to cover all cases.
+For example the following method is annotated with an example class literal to achieve a positive test:
+
+```java
+public static boolean isAnnotation(@InTestsUseClasses(Nullable.class) Class<?> theClass) {
+    return theClass.isAnnotation();
+}
+```
+
+### Using `@InTestsUseStrings`
+
+The `@InTestsUseStrings` annotation allows the user to recommend specific `String` values to use in tests.
+Sometimes this can be useful to control the values used for cosmetic reasons, but it can also be useful when Cover is unable to identify values to cover all cases.
+For example the following method is annotated with some genuine examples of song titles that can be used to achieve coverage:
+
+```java
+public static boolean isDayRelatedSongTitle(@InTestsUseStrings({"I Don't Like Mondays", "Here Comes The Weekend"}) String title) {
+    return Stream.of(DayOfWeek.values())
+        .map(DayOfWeek::name)
+        .map(String::toLowerCase)
+        .anyMatch(title.toLowerCase()::contains);
+}
+```
+
+### Using `@InTestsUseCharacters`
+
+The `@InTestsUseCharacters` annotation allows the user to recommend specific `char` values to use in tests.
+Sometimes this can be useful to control the values used for cosmetic reasons, but it can also be useful when Cover is unable to identify values to cover all cases.
+For example the following method is annotated with a genuine examples characters that make up a Unicode surrogate pair that can be used to achieve a positive test:
+
+```java
+@Nullable
+public static Integer toNullableCodePoint(
+        @InTestsUseCharacters('\uD801') char high,
+        @InTestsUseCharacters('\uDC37') char low) {
+    if (Character.isSurrogatePair(high, low)) {
+        return Character.toCodePoint(high, low);
+    }
+    return null;
+}
+```
+
+### Using `@InTestsUseBytes`
+
+The `@InTestsUseBytes` annotation allows the user to recommend specific `byte` values to use in tests.
+Sometimes this can be useful to control the values used for cosmetic reasons, but it can also be useful when Cover is unable to identify values to cover all cases.
+For example the following method is annotated to use a specific preferred value:
+
+```java
+public static String toUpperHexString(@InTestsUseBytes((byte)0xD1) byte input) {
+    return Long.toHexString(input).toUpperCase();
+}
+```
+
+### Using `@InTestsUseShorts`
+
+The `@InTestsUseShorts` annotation allows the user to recommend specific `short` values to use in tests.
+Sometimes this can be useful to control the values used for cosmetic reasons, but it can also be useful when Cover is unable to identify values to cover all cases.
+For example the following method is annotated to use a specific preferred value:
+
+```java
+public static String toUpperHexString(@InTestsUseShorts((short)0xD1FF) short input) {
+    return Long.toHexString(input).toUpperCase();
+}
+```
+
+### Using `@InTestsUseIntegers`
+
+The `@InTestsUseIntegers` annotation allows the user to recommend specific `int` values to use in tests.
+Sometimes this can be useful to control the values used for cosmetic reasons, but it can also be useful when Cover is unable to identify values to cover all cases.
+For example the following method is annotated to use a specific preferred value:
+
+```java
+public static String toUpperHexString(@InTestsUseIntegers(0xD1FFB) int input) {
+    return Long.toHexString(input).toUpperCase();
+}
+```
+
+### Using `@InTestsUseLongs`
+
+The `@InTestsUseLongs` annotation allows the user to recommend specific `long` values to use in tests.
+Sometimes this can be useful to control the values used for cosmetic reasons, but it can also be useful when Cover is unable to identify values to cover all cases.
+For example the following method is annotated to use a specific preferred value:
+
+```java
+public static String toUpperHexString(@InTestsUseLongs(0xD1FFBL) long input) {
+    return Long.toHexString(input).toUpperCase();
+}
+```
+
+### Using `@InTestsUseFloats`
+
+The `@InTestsUseFloats` annotation allows the user to recommend specific `float` values to use in tests.
+Sometimes this can be useful to control the values used for cosmetic reasons, but it can also be useful when Cover is unable to identify values to cover all cases.
+For example the following method is annotated to use a specific preferred value:
+
+```java
+public static boolean isNearPi(@InTestsUseFloats(3.14159f) float input) {
+    return Float.toString(input).startsWith("3.14");
+}
+```
+
+### Using `@InTestsUseDoubles`
+
+The `@InTestsUseDoubles` annotation allows the user to recommend specific `double` values to use in tests.
+Sometimes this can be useful to control the values used for cosmetic reasons, but it can also be useful when Cover is unable to identify values to cover all cases.
+For example the following method is annotated to use a specific preferred value:
+
+```java
+public static boolean isNearPi(@InTestsUseDoubles(Math.PI) float input) {
+    return Double.toString(input).startsWith("3.14");
+}
+```
+
+### Using `@InterestingTestFactory`
+
+Indicates the annotated method as a useful factory method for use in tests.
+Cover will automatically recognise factory methods that simply return a newly created instance, but may not identify more complicated factories.
+This annotation allows such factory methods to be manually annotated so that Cover considers them for producing inputs.
+For example the following method under test takes a `User` as input, but the `User` constructor is private and Cover doesn't naturally consider `ofStaff(String)` to be a safe factory method to call.
+By annotating the `ofStaff(String)` with `@InterstingTestFactory` we can tell Cover that this should be considered a good factory method to use in tests.
+
+```java
+public String getUserDisplayString(User user) {
+    if (user.manager) {
+        return user.username + " (manager)";
+    }
+    else {
+        return user.username;
+    }
+}
+
+class User {
+    private static Map<String, User> staff = new HashMap<String, User>();
+
+    @InterestingTestFactory
+    public static User ofStaff(String name) {
+        return staff.computeIfAbsent(name, ignored -> new User(name, false));
+    }
+
+    public final String username;
+    public final boolean manager;
+
+    private User(String username, boolean manager) {
+        this.username = username;
+        this.manager = manager;
+    }
+}
+```
+
