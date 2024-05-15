@@ -12,7 +12,6 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-
 package com.diffblue.cover.annotations;
 
 import static com.diffblue.cover.annotations.MockDecision.RECOMMENDED;
@@ -40,6 +39,10 @@ public @interface InTestsMockStatic {
   @Retention(CLASS)
   @Target({PACKAGE, TYPE, METHOD})
   @interface Repeatable {
+
+    /**
+     * @return the repeated {@link InTestsMockStatic} annotations.
+     */
     InTestsMockStatic[] value();
   }
 

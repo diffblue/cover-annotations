@@ -12,10 +12,14 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-
 package com.diffblue.cover.annotations;
 
+/**
+ * A decision indicating that a particular annotation indicating that mocking should be required vs
+ * recommended vs allowed vs forbidden from mocking.
+ */
 public enum MockDecision {
+
   /** Mocking is required, other instantiations are not permitted. */
   REQUIRED,
 
