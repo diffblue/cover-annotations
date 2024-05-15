@@ -43,11 +43,11 @@ Annotations placed on packages affect tests for all classes and methods under te
 Annotations placed on classes affect tests for that class and all it's methods under test, overriding package level annotations.
 Annotations placed on methods affect just that method under test, overriding package and class level annotations.
 
-| Annotation                  | Equivalent `dcover create` option                 |
-|:----------------------------|:--------------------------------------------------|
-| `@InTestsMock`              | `--mock`, `--disable-mock-inputs`                 |
-| `@InTestsMockConstruction`  | `--mock-construction`                             |
-| `@InTestsMockStatic`        | `--mock-static`                                   |
+| Annotation                 | Equivalent `dcover create` option |
+|:---------------------------|:----------------------------------|
+| `@InTestsMock`             | `--mock`, `--disable-mock-inputs` |
+| `@InTestsMockConstruction` | `--mock-construction`             |
+| `@InTestsMockStatic`       | `--mock-static`                   |
 
 The annotations will be respected by Diffblue Cover via both command line and IntelliJ Plugin.
 When used from the command line in conjunction with equivalent options then the command line options take priority over the annotations found.
@@ -104,3 +104,4 @@ public class ClassUnderTest {
   }
 }
 ```
+
