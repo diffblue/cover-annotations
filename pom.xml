@@ -12,9 +12,7 @@
   ~ express or implied. See the License for the specific language governing
   ~ permissions and limitations under the License.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diffblue.cover</groupId>
   <artifactId>cover-annotations</artifactId>
@@ -22,9 +20,7 @@
   <packaging>jar</packaging>
 
   <name>Cover Annotations</name>
-  <description>
-    Annotations for end users to enable fine-grained control of Diffblue Cover.
-  </description>
+  <description>Annotations for end users to enable fine-grained control of Diffblue Cover.</description>
   <url>https://www.diffblue.com/</url>
 
   <licenses>
@@ -45,9 +41,17 @@
   </developers>
 
   <scm>
-    <url>https://github.com/diffblue/cover-annotations</url>
     <connection>scm:git:git://github.com/diffblue/cover-annotations.git</connection>
+    <url>https://github.com/diffblue/cover-annotations</url>
   </scm>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <!-- nb this must be the same as the 'id' field in 'settings.xml' -->
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -55,93 +59,148 @@
     <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
     <maven.javadoc.plugin.version>3.6.3</maven.javadoc.plugin.version>
     <maven.source.plugin.version>3.3.0</maven.source.plugin.version>
+    <maven.spotless.plugin.version>2.43.0</maven.spotless.plugin.version>
+    <google.java.format.version>1.17.0</google.java.format.version>
     <gpg.plugin.version>3.2.1</gpg.plugin.version>
   </properties>
 
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id><!-- nb this must be the same as the 'id' field in 'settings.xml' -->
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-  </distributionManagement>
-
   <profiles>
-  <profile>
-  <id>stdbuild</id>
-  <activation>
-    <activeByDefault>true</activeByDefault>
-  </activation>
-  <build>
+    <profile>
+      <id>stdbuild</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
 
-    <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>${maven.compiler.plugin.version}</version>
+            <configuration>
+              <source>1.8</source>
+              <target>1.8</target>
+              <release>8</release>
+            </configuration>
+          </plugin>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven.compiler.plugin.version}</version>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
-      <!-- Source plugin to include sources in the final artifact -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <version>${maven.source.plugin.version}</version>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
+          <!-- Source plugin to include sources in the final artifact -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>${maven.source.plugin.version}</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
 
-      <!-- Javadoc plugin to include Javadoc in the final artifact -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>${maven.javadoc.plugin.version}</version>
-        <executions>
-          <execution>
-            <id>attach-javadocs</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-    </build>
+          <!-- Javadoc plugin to include Javadoc in the final artifact -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>${maven.javadoc.plugin.version}</version>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+                <configuration>
+                  <source>8</source>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>com.diffplug.spotless</groupId>
+            <artifactId>spotless-maven-plugin</artifactId>
+            <version>${maven.spotless.plugin.version}</version>
+            <configuration>
+              <ratchetFrom>origin/main</ratchetFrom>
+              <pom>
+                <includes>
+                  <include>**/pom.xml</include>
+                </includes>
+                <sortPom></sortPom>
+              </pom>
+              <java>
+                <includes>
+                  <include>**/*.java</include>
+                </includes>
+                <licenseHeader>
+                  <content>/*
+                    * Copyright $YEAR Diffblue Limited.
+                    *
+                    * Licensed under the Apache License, Version 2.0 (the "License").
+                    * You may not use this file except in compliance with the License.
+                    * A copy of the License is located at
+                    *
+                    *  https://www.apache.org/licenses/LICENSE-2.0
+                    *
+                    * or in the "license" file accompanying this file. This file is distributed
+                    * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+                    * express or implied. See the License for the specific language governing
+                    * permissions and limitations under the License.
+                    */</content>
+                  <delimiter>package</delimiter>
+                </licenseHeader>
+                <googleJavaFormat>
+                  <version>${google.java.format.version}</version>
+                  <style>GOOGLE</style>
+                </googleJavaFormat>
+              </java>
+              <markdown>
+                <includes>
+                  <include>**/*.md</include>
+                </includes>
+                <flexmark></flexmark>
+              </markdown>
+            </configuration>
+            <executions>
+              <execution>
+                <id>default-cli</id>
+                <goals>
+                  <goal>apply</goal>
+                </goals>
+                <phase>generate-sources</phase>
+              </execution>
+            </executions>
+          </plugin>
+
+        </plugins>
+      </build>
     </profile>
-  <profile>
-  <id>sign</id>
-  <activation>
-    <activeByDefault>false</activeByDefault>
-  </activation>
-  <build>
-    <plugins>
-      <!-- GPG Plugin for signing artifacts -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-gpg-plugin</artifactId>
-        <version>${gpg.plugin.version}</version>
-        <executions>
-          <execution>
-            <id>sign-artifacts</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-    </plugins>
-  </build>
-  </profile>
+    <profile>
+      <id>sign</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <!-- GPG Plugin for signing artifacts -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>${gpg.plugin.version}</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+                <phase>verify</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 
 </project>
