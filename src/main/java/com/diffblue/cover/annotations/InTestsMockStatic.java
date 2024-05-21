@@ -30,6 +30,8 @@ import java.lang.annotation.Target;
  * MockDecision#ALLOWED}, but with annotation then the decision defaults to {@link
  * MockDecision#RECOMMENDED}. The decision can be overridden with an explicit {@link #decision()}
  * value.
+ *
+ * @since Diffblue Cover 2024.04.02
  */
 @Retention(CLASS)
 @Repeatable(InTestsMockStatic.Repeatable.class)

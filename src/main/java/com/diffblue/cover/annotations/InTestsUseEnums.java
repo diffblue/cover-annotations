@@ -27,6 +27,8 @@ import java.lang.annotation.Target;
 /**
  * Identifies values that should be considered when writing tests that require inputs of type {@link
  * Enum}.
+ *
+ * @since Diffblue Cover 2024.06.01
  */
 @Retention(RUNTIME)
 @Repeatable(InTestsUseEnums.Repeatable.class)
