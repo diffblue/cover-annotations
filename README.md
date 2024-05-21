@@ -105,6 +105,17 @@ public class ClassUnderTest {
 }
 ```
 
+### Using `@InTestsUseEnum`
+
+The `@InTestsUseEnum` annotation allows the user to recommend specific `enum` literal values to use in tests.
+Sometimes this can be useful to control the values used for cosmetic reasons, but it can also be useful when Cover is unable to identify values to cover all cases.
+
+```java
+public static boolean isDateOrTimeBased(@InTestsUseEnums({"SECONDS", "YEARS", "FOREVER"}) ChronoUnit chronoUnit) {
+    return chronoUnit.isDateBased() || chronoUnit.isTimeBased();
+}
+```
+
 ### Using `@InTestsUseClasses`
 
 The `@InTestsUseClasses` annotation allows the user to recommend specific `Class` literal values to use in tests.
@@ -126,9 +137,9 @@ For example the following method is annotated with some genuine examples of song
 ```java
 public static boolean isDayRelatedSongTitle(@InTestsUseStrings({"I Don't Like Mondays", "Here Comes The Weekend"}) String title) {
     return Stream.of(DayOfWeek.values())
-        .map(DayOfWeek::name)
-        .map(String::toLowerCase)
-        .anyMatch(title.toLowerCase()::contains);
+            .map(DayOfWeek::name)
+            .map(String::toLowerCase)
+            .anyMatch(title.toLowerCase()::contains);
 }
 ```
 
