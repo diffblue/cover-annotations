@@ -37,20 +37,16 @@ dependencies {
 }
 ```
 
-## Annotations
-
 Annotations placed on packages affect tests for all classes and methods under test in that package.
 Annotations placed on classes affect tests for that class and all it's methods under test, overriding package level annotations.
 Annotations placed on methods affect just that method under test, overriding package and class level annotations.
 
-| Annotation                 | Equivalent `dcover create` option |
-|:---------------------------|:----------------------------------|
-| `@InTestsMock`             | `--mock`, `--disable-mock-inputs` |
-| `@InTestsMockConstruction` | `--mock-construction`             |
-| `@InTestsMockStatic`       | `--mock-static`                   |
-
 The annotations will be respected by Diffblue Cover via both command line and IntelliJ Plugin.
 When used from the command line in conjunction with equivalent options then the command line options take priority over the annotations found.
+
+## Mocking Annotations
+
+Mocking annotations allow fine grained control over what mocking should be preferred when testing.
 
 ### Using `@InTestsMock`
 
@@ -77,6 +73,13 @@ public class ClassUnderTest {
 }
 ```
 
+> [!NOTE]
+> Using `@InTestsMock` has the same effect as, and can be overridden by, Cover CLI command line options:
+>
+> ```
+> dcover create --mock ClassToMock --disable-mock-inputs ClassToForbidMocking
+> ```
+
 ### Using `@InTestsMockConstruction`
 
 Perhaps you have a method that Diffblue Cover is unable to test, and you think it could make more progress using `Mockito.mockConstruction(Random.class)`.
@@ -91,6 +94,13 @@ public class ClassUnderTest {
 }
 ```
 
+> [!NOTE]
+> Note that using `@InTestsMockConstruction` has the same effect as, and can be overridden by, Cover CLI command line option:
+>
+> ```
+> dcover create --mock-construction ClassToMockConstruction
+> ```
+
 ### Using `@InTestsMockStatic`
 
 Perhaps you have a method that Diffblue Cover is unable to test, and you think it could make more progress using `Mockito.mockStatic(UUID.class)`.
@@ -102,6 +112,28 @@ public class ClassUnderTest {
   public static Path methodUnderTest() {
     return Paths.get(UUID.randomUUID() + ".zip");
   }
+}
+```
+
+> [!NOTE]
+> Using `@InTestsMockStatic` has the same effect as, and can be overridden by, Cover CLI command line option:
+>
+> ```
+> dcover create --mock-static ClassToMockStatic
+> ```
+
+## Custom Input Annotations
+
+Custom input annotations allow particular inputs to be recommended to Diffblue Cover when writing tests.
+
+### Using `@InTestsUseEnum`
+
+The `@InTestsUseEnum` annotation allows the user to recommend specific `enum` literal values to use in tests.
+Sometimes this can be useful to control the values used for cosmetic reasons, but it can also be useful when Cover is unable to identify values to cover all cases.
+
+```java
+public static boolean isDateOrTimeBased(@InTestsUseEnums({"SECONDS", "YEARS", "FOREVER"}) ChronoUnit chronoUnit) {
+    return chronoUnit.isDateBased() || chronoUnit.isTimeBased();
 }
 ```
 
@@ -126,9 +158,9 @@ For example the following method is annotated with some genuine examples of song
 ```java
 public static boolean isDayRelatedSongTitle(@InTestsUseStrings({"I Don't Like Mondays", "Here Comes The Weekend"}) String title) {
     return Stream.of(DayOfWeek.values())
-        .map(DayOfWeek::name)
-        .map(String::toLowerCase)
-        .anyMatch(title.toLowerCase()::contains);
+            .map(DayOfWeek::name)
+            .map(String::toLowerCase)
+            .anyMatch(title.toLowerCase()::contains);
 }
 ```
 
@@ -221,6 +253,10 @@ public static boolean isNearPi(@InTestsUseDoubles(Math.PI) float input) {
     return Double.toString(input).startsWith("3.14");
 }
 ```
+
+## Interesting Value Annotations
+
+Interesting value annotations allow users to promote existing fields and methods to be identified and used in particular roles by Diffblue Cover when writing tests.
 
 ### Using `@InterestingTestFactory`
 

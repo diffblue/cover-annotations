@@ -20,7 +20,11 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-/** Indicates the annotated method as a useful factory method for use in tests. */
+/**
+ * Indicates the annotated method as a useful factory method for use in tests.
+ *
+ * @since Diffblue Cover 2024.05.02
+ */
 @Retention(RUNTIME)
 @Target(METHOD)
 public @interface InterestingTestFactory {}

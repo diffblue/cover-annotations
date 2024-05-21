@@ -27,6 +27,8 @@ import java.lang.annotation.Target;
 /**
  * Identifies values that should be considered when writing tests that require inputs of type {@code
  * short} or {@link Short}.
+ *
+ * @since Diffblue Cover 2024.05.02
  */
 @Retention(RUNTIME)
 @Repeatable(InTestsUseShorts.Repeatable.class)

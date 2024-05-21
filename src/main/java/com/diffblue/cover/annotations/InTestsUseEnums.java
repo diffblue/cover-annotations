@@ -25,28 +25,28 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * Identifies values that should be considered when writing tests that require inputs of type {@code
- * float} or {@link Float}.
+ * Identifies values that should be considered when writing tests that require inputs of type {@link
+ * Enum}.
  *
- * @since Diffblue Cover 2024.05.02
+ * @since Diffblue Cover 2024.06.01
  */
 @Retention(RUNTIME)
-@Repeatable(InTestsUseFloats.Repeatable.class)
-public @interface InTestsUseFloats {
+@Repeatable(InTestsUseEnums.Repeatable.class)
+public @interface InTestsUseEnums {
 
-  /** Collects multiple {@link InTestsUseFloats} annotations. */
+  /** Collects multiple {@link InTestsUseEnums} annotations. */
   @Retention(RUNTIME)
   @Target({PACKAGE, TYPE, METHOD, PARAMETER})
   @interface Repeatable {
 
     /**
-     * @return the repeated {@link InTestsUseFloats} annotations.
+     * @return the repeated {@link InTestsUseEnums} annotations.
      */
-    InTestsUseFloats[] value();
+    InTestsUseEnums[] value();
   }
 
   /**
-   * @return {@code float} values that should be tried.
+   * @return {@link String} values that should be tried as names of the annotated enum.
    */
-  float[] value() default {};
+  String[] value() default {};
 }

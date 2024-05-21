@@ -27,6 +27,8 @@ import java.lang.annotation.Target;
 /**
  * Identifies values that should be considered when writing tests that require inputs of type {@code
  * char} or {@link Character}.
+ *
+ * @since Diffblue Cover 2024.05.02
  */
 @Retention(RUNTIME)
 @Repeatable(InTestsUseCharacters.Repeatable.class)
