@@ -59,7 +59,7 @@
     <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
     <maven.javadoc.plugin.version>3.6.3</maven.javadoc.plugin.version>
     <maven.source.plugin.version>3.3.0</maven.source.plugin.version>
-    <maven.spotless.plugin.version>2.43.0</maven.spotless.plugin.version>
+    <maven.spotless.plugin.version>2.10.0</maven.spotless.plugin.version>
     <google.java.format.version>1.17.0</google.java.format.version>
     <gpg.plugin.version>3.2.1</gpg.plugin.version>
   </properties>
