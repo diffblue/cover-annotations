@@ -38,7 +38,7 @@ dependencies {
 ```
 
 Annotations placed on packages affect tests for all classes and methods under test in that package.
-Annotations placed on classes affect tests for that class and all it's methods under test, overriding package level annotations.
+Annotations placed on classes affect tests for that class and all its methods under test, overriding package level annotations.
 Annotations placed on methods affect just that method under test, overriding package and class level annotations.
 
 The annotations will be respected by Diffblue Cover via both command line and IntelliJ Plugin.
