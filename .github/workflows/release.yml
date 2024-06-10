@@ -1,0 +1,57 @@
+name: Release to Maven Central
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  sign-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this branch
+        uses: actions/checkout@v4
+        with:
+          token: ${{ github.token }}
+          fetch-depth: 0
+
+      - name: Check version number has been increased
+        run: |
+          CURRENT_VERSION="v$(awk -F'[<>]' '/<version>/ {print $3; exit}' pom.xml)"
+          echo "Current version: '$CURRENT_VERSION'"
+          PREVIOUS_VERSION=$(git describe --tags --abbrev=0)
+          echo "Previous version: '$PREVIOUS_VERSION'"
+          if [[ "$CURRENT_VERSION" == "$PREVIOUS_VERSION" ]]; then
+            echo "Version number has not changed"
+            echo "skip=true" >> $GITHUB_ENV
+          else
+            echo "skip=false" >> $GITHUB_ENV
+          fi
+      
+      - name: Configure GPG Key
+        if: ${{ env.skip == 'false' }}
+        run: |
+          echo -n "$GPG_KEY_BASE64" | base64 --decode | gpg --batch --passphrase ${GPG_PASSPHRASE} --import
+        env:
+          GPG_KEY_BASE64: ${{ secrets.GPG_KEY_BASE64 }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+      
+      - name: Deploy Signed Jar to Maven Central
+        if: ${{ env.skip == 'false' }}
+        run: |
+            mvn clean deploy -B -P sign,stdbuild --settings .github/settings.xml repository:bundle-create
+        env:
+          GPG_ID: ${{ secrets.GPG_ID }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+      
+      - name: Create Release on GitHub
+        if: ${{ env.skip == 'false' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION_NUMBER=$(awk -F'[<>]' '/<version>/ {print $3; exit}' pom.xml)
+          git tag "v$VERSION_NUMBER"
+          git push origin "v$VERSION_NUMBER"
+          gh release create "v$VERSION_NUMBER" --repo="$GITHUB_REPOSITORY" --title="v$VERSION_NUMBER" --generate-notes
