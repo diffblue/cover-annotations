@@ -51,6 +51,10 @@
       <!-- nb this must be the same as the 'id' field in 'settings.xml' -->
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+    </repository>
   </distributionManagement>
 
   <properties>
@@ -64,6 +68,21 @@
     <gpg.plugin.version>3.2.1</gpg.plugin.version>
   </properties>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.13</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
   <profiles>
     <profile>
       <id>stdbuild</id>
@@ -92,6 +111,7 @@
             <executions>
               <execution>
                 <id>attach-sources</id>
+                <phase>verify</phase>
                 <goals>
                   <goal>jar</goal>
                 </goals>
@@ -107,6 +127,7 @@
             <executions>
               <execution>
                 <id>attach-javadocs</id>
+                <phase>verify</phase>
                 <goals>
                   <goal>jar</goal>
                 </goals>
@@ -195,6 +216,16 @@
                   <goal>sign</goal>
                 </goals>
                 <phase>verify</phase>
+                <configuration>
+                  <useAgent>true</useAgent>
+                  <keyname>${gpg.keyname}</keyname>
+                  <passphraseServerId>${gpg.keyname}</passphraseServerId>
+                  <gpgArguments>
+                    <arg>--batch</arg>
+                    <arg>--pinentry-mode</arg>
+                    <arg>loopback</arg>
+                  </gpgArguments>
+                </configuration>
               </execution>
             </executions>
           </plugin>
