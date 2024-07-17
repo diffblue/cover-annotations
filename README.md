@@ -14,7 +14,7 @@ In order to use the annotations in your Maven project then the Diffblue reposito
     <dependency>
         <groupId>com.diffblue.cover</groupId>
         <artifactId>cover-annotations</artifactId>
-        <version>1.0.0</version>
+        <version>1.1.0</version>
     </dependency>
 </dependencies>
 ```
@@ -25,7 +25,7 @@ In order to use the annotations in your Gradle project then the Diffblue reposit
 
 ```gradle
 dependencies {
-    implementation("com.diffblue.cover:cover-annotations:1.0.0")
+    implementation("com.diffblue.cover:cover-annotations:1.1.0")
 }
 ```
 
@@ -33,7 +33,7 @@ Or similarly for `build.gradle.kts`:
 
 ```
 dependencies {
-    implementation("com.diffblue.cover:cover-annotations:1.0.0")
+    implementation("com.diffblue.cover:cover-annotations:1.1.0")
 }
 ```
 
