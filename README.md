@@ -126,9 +126,9 @@ public class ClassUnderTest {
 
 Custom input annotations allow particular inputs to be recommended to Diffblue Cover when writing tests.
 
-### Using `@InTestsUseEnum`
+### Using `@InTestsUseEnums`
 
-The `@InTestsUseEnum` annotation allows the user to recommend specific `enum` literal values to use in tests.
+The `@InTestsUseEnums` annotation allows the user to recommend specific `enum` literal values to use in tests.
 Sometimes this can be useful to control the values used for cosmetic reasons, but it can also be useful when Cover is unable to identify values to cover all cases.
 
 ```java
