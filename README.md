@@ -1,6 +1,10 @@
-# Cover Annotations
+<h1 align="center">Cover Annotations</h1>
+
+<div align="center">
 
 ![Maven Central](https://img.shields.io/maven-central/v/com.diffblue.cover/cover-annotations.svg)
+
+</div>
 
 Cover Annotations allows users to annotate their Java codebase with advice on how best to test it.
 In turn this can be used by [Diffblue Cover](https://diffblue.com/cover) to tune the tests it writes.
