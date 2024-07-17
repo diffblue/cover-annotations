@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Maven Central](https://img.shields.io/maven-central/v/com.diffblue.cover/cover-annotations.svg)
+[![Maven Central](https://img.shields.io/maven-central/v/com.diffblue.cover/cover-annotations.svg)](https://central.sonatype.com/artifact/com.diffblue.cover/cover-annotations/overview)
 
 </div>
 
