@@ -2,6 +2,7 @@
 
 <div align="center">
 
+[![Apache 2.0](https://img.shields.io/github/license/diffblue/cover-annotations)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Maven Central](https://img.shields.io/maven-central/v/com.diffblue.cover/cover-annotations.svg)](https://central.sonatype.com/artifact/com.diffblue.cover/cover-annotations/overview)
 
 </div>
