@@ -46,15 +46,15 @@
   </scm>
 
   <distributionManagement>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+    </repository>
     <snapshotRepository>
       <id>ossrh</id>
       <!-- nb this must be the same as the 'id' field in 'settings.xml' -->
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-    </repository>
   </distributionManagement>
 
   <properties>
@@ -63,8 +63,8 @@
     <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
     <maven.javadoc.plugin.version>3.6.3</maven.javadoc.plugin.version>
     <maven.source.plugin.version>3.3.0</maven.source.plugin.version>
-    <maven.spotless.plugin.version>2.10.0</maven.spotless.plugin.version>
-    <google.java.format.version>1.17.0</google.java.format.version>
+    <maven.spotless.plugin.version>2.30.0</maven.spotless.plugin.version>
+    <google.java.format.version>1.7</google.java.format.version>
     <gpg.plugin.version>3.2.1</gpg.plugin.version>
   </properties>
 
@@ -111,10 +111,10 @@
             <executions>
               <execution>
                 <id>attach-sources</id>
-                <phase>verify</phase>
                 <goals>
                   <goal>jar</goal>
                 </goals>
+                <phase>verify</phase>
               </execution>
             </executions>
           </plugin>
@@ -127,10 +127,10 @@
             <executions>
               <execution>
                 <id>attach-javadocs</id>
-                <phase>verify</phase>
                 <goals>
                   <goal>jar</goal>
                 </goals>
+                <phase>verify</phase>
                 <configuration>
                   <source>8</source>
                 </configuration>
