@@ -46,15 +46,15 @@
   </scm>
 
   <distributionManagement>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+    </repository>
     <snapshotRepository>
       <id>ossrh</id>
       <!-- nb this must be the same as the 'id' field in 'settings.xml' -->
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-    </repository>
   </distributionManagement>
 
   <properties>
@@ -111,10 +111,10 @@
             <executions>
               <execution>
                 <id>attach-sources</id>
-                <phase>verify</phase>
                 <goals>
                   <goal>jar</goal>
                 </goals>
+                <phase>verify</phase>
               </execution>
             </executions>
           </plugin>
@@ -127,10 +127,10 @@
             <executions>
               <execution>
                 <id>attach-javadocs</id>
-                <phase>verify</phase>
                 <goals>
                   <goal>jar</goal>
                 </goals>
+                <phase>verify</phase>
                 <configuration>
                   <source>8</source>
                 </configuration>
