@@ -15,7 +15,7 @@
 package com.diffblue.cover.annotations.generated;
 
 import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
  * Indicates the method being tested in the annotated test method. Diffblue Cover attaches this
  * annotation to all tests that it creates.
  */
-@Retention(RUNTIME)
+@Retention(SOURCE)
 @Target(METHOD)
 public @interface MethodUnderTest {
 
