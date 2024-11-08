@@ -21,7 +21,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * Indicates the method being tested in the annotated test method. Diffblue Cover attaches this
+ * Indicates the methods being tested in the annotated test method. Diffblue Cover attaches this
  * annotation to all tests that it creates.
  */
 @Retention(SOURCE)
