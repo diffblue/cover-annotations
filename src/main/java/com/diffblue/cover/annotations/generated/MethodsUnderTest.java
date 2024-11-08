@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  */
 @Retention(SOURCE)
 @Target(METHOD)
-public @interface MethodUnderTest {
+public @interface MethodsUnderTest {
 
   String[] value();
 }
