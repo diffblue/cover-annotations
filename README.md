@@ -1,41 +1,21 @@
-# Cover Annotations
+<h1 align="center">Cover Annotations</h1>
+
+<div align="center">
+
+[![Apache 2.0](https://img.shields.io/github/license/diffblue/cover-annotations)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Maven Central](https://img.shields.io/maven-central/v/com.diffblue.cover/cover-annotations.svg)](https://central.sonatype.com/artifact/com.diffblue.cover/cover-annotations/overview)
+
+</div>
 
 Cover Annotations allows users to annotate their Java codebase with advice on how best to test it.
 In turn this can be used by [Diffblue Cover](https://diffblue.com/cover) to tune the tests it writes.
 
 ## Installation
 
-### Maven
+Cover Annotations is published in the [Maven central repository](https://central.sonatype.com/artifact/com.diffblue.cover/cover-annotations/overview).
+In order to use the annotations simply add `cover-annotations` as a dependency to your project, for example copying the snippet for Maven or Gradle from the repository page.
 
-In order to use the annotations in your Maven project then the Diffblue repository and `cover-annotations` dependency will need to be added into your `pom.xml`:
-
-```xml
-<dependencies>
-    <dependency>
-        <groupId>com.diffblue.cover</groupId>
-        <artifactId>cover-annotations</artifactId>
-        <version>1.0.0</version>
-    </dependency>
-</dependencies>
-```
-
-### Gradle
-
-In order to use the annotations in your Gradle project then the Diffblue repository and `cover-annotations` dependency will need to be added into your `build.gradle`:
-
-```gradle
-dependencies {
-    implementation("com.diffblue.cover:cover-annotations:1.0.0")
-}
-```
-
-Or similarly for `build.gradle.kts`:
-
-```
-dependencies {
-    implementation("com.diffblue.cover:cover-annotations:1.0.0")
-}
-```
+## Usage
 
 Annotations placed on packages affect tests for all classes and methods under test in that package.
 Annotations placed on classes affect tests for that class and all its methods under test, overriding package level annotations.
@@ -44,11 +24,11 @@ Annotations placed on methods affect just that method under test, overriding pac
 The annotations will be respected by Diffblue Cover via both command line and IntelliJ Plugin.
 When used from the command line in conjunction with equivalent options then the command line options take priority over the annotations found.
 
-## Mocking Annotations
+### Mocking Annotations
 
 Mocking annotations allow fine grained control over what mocking should be preferred when testing.
 
-### Using `@InTestsMock`
+#### Using `@InTestsMock`
 
 Perhaps you have a method that Diffblue Cover would ordinarily test using an `Integer` but you'd prefer to see it tested using `Mockito.mock(..)`.
 In this case you could annotate the method (or class, or package) to recommend mocking `Number`:
@@ -80,7 +60,7 @@ public class ClassUnderTest {
 > dcover create --mock ClassToMock --disable-mock-inputs ClassToForbidMocking
 > ```
 
-### Using `@InTestsMockConstruction`
+#### Using `@InTestsMockConstruction`
 
 Perhaps you have a method that Diffblue Cover is unable to test, and you think it could make more progress using `Mockito.mockConstruction(Random.class)`.
 In this case you could annotate the method (or class, or package) to recommend mocking construction of `Random`:
@@ -101,7 +81,7 @@ public class ClassUnderTest {
 > dcover create --mock-construction ClassToMockConstruction
 > ```
 
-### Using `@InTestsMockStatic`
+#### Using `@InTestsMockStatic`
 
 Perhaps you have a method that Diffblue Cover is unable to test, and you think it could make more progress using `Mockito.mockStatic(UUID.class)`.
 In this case you could annotate the method (or class, or package) to recommend mocking static methods of `UUID`:
@@ -122,13 +102,13 @@ public class ClassUnderTest {
 > dcover create --mock-static ClassToMockStatic
 > ```
 
-## Custom Input Annotations
+### Custom Input Annotations
 
 Custom input annotations allow particular inputs to be recommended to Diffblue Cover when writing tests.
 
-### Using `@InTestsUseEnum`
+#### Using `@InTestsUseEnums`
 
-The `@InTestsUseEnum` annotation allows the user to recommend specific `enum` literal values to use in tests.
+The `@InTestsUseEnums` annotation allows the user to recommend specific `enum` literal values to use in tests.
 Sometimes this can be useful to control the values used for cosmetic reasons, but it can also be useful when Cover is unable to identify values to cover all cases.
 
 ```java
@@ -137,7 +117,7 @@ public static boolean isDateOrTimeBased(@InTestsUseEnums({"SECONDS", "YEARS", "F
 }
 ```
 
-### Using `@InTestsUseClasses`
+#### Using `@InTestsUseClasses`
 
 The `@InTestsUseClasses` annotation allows the user to recommend specific `Class` literal values to use in tests.
 Sometimes this can be useful to control the values used for cosmetic reasons, but it can also be useful when Cover is unable to identify values to cover all cases.
@@ -149,7 +129,7 @@ public static boolean isAnnotation(@InTestsUseClasses(Nullable.class) Class<?> t
 }
 ```
 
-### Using `@InTestsUseStrings`
+#### Using `@InTestsUseStrings`
 
 The `@InTestsUseStrings` annotation allows the user to recommend specific `String` values to use in tests.
 Sometimes this can be useful to control the values used for cosmetic reasons, but it can also be useful when Cover is unable to identify values to cover all cases.
@@ -164,7 +144,7 @@ public static boolean isDayRelatedSongTitle(@InTestsUseStrings({"I Don't Like Mo
 }
 ```
 
-### Using `@InTestsUseCharacters`
+#### Using `@InTestsUseCharacters`
 
 The `@InTestsUseCharacters` annotation allows the user to recommend specific `char` values to use in tests.
 Sometimes this can be useful to control the values used for cosmetic reasons, but it can also be useful when Cover is unable to identify values to cover all cases.
@@ -182,7 +162,7 @@ public static Integer toNullableCodePoint(
 }
 ```
 
-### Using `@InTestsUseBytes`
+#### Using `@InTestsUseBytes`
 
 The `@InTestsUseBytes` annotation allows the user to recommend specific `byte` values to use in tests.
 Sometimes this can be useful to control the values used for cosmetic reasons, but it can also be useful when Cover is unable to identify values to cover all cases.
@@ -194,7 +174,7 @@ public static String toUpperHexString(@InTestsUseBytes((byte)0xD1) byte input) {
 }
 ```
 
-### Using `@InTestsUseShorts`
+#### Using `@InTestsUseShorts`
 
 The `@InTestsUseShorts` annotation allows the user to recommend specific `short` values to use in tests.
 Sometimes this can be useful to control the values used for cosmetic reasons, but it can also be useful when Cover is unable to identify values to cover all cases.
@@ -206,7 +186,7 @@ public static String toUpperHexString(@InTestsUseShorts((short)0xD1FF) short inp
 }
 ```
 
-### Using `@InTestsUseIntegers`
+#### Using `@InTestsUseIntegers`
 
 The `@InTestsUseIntegers` annotation allows the user to recommend specific `int` values to use in tests.
 Sometimes this can be useful to control the values used for cosmetic reasons, but it can also be useful when Cover is unable to identify values to cover all cases.
@@ -218,7 +198,7 @@ public static String toUpperHexString(@InTestsUseIntegers(0xD1FFB) int input) {
 }
 ```
 
-### Using `@InTestsUseLongs`
+#### Using `@InTestsUseLongs`
 
 The `@InTestsUseLongs` annotation allows the user to recommend specific `long` values to use in tests.
 Sometimes this can be useful to control the values used for cosmetic reasons, but it can also be useful when Cover is unable to identify values to cover all cases.
@@ -230,7 +210,7 @@ public static String toUpperHexString(@InTestsUseLongs(0xD1FFBL) long input) {
 }
 ```
 
-### Using `@InTestsUseFloats`
+#### Using `@InTestsUseFloats`
 
 The `@InTestsUseFloats` annotation allows the user to recommend specific `float` values to use in tests.
 Sometimes this can be useful to control the values used for cosmetic reasons, but it can also be useful when Cover is unable to identify values to cover all cases.
@@ -242,7 +222,7 @@ public static boolean isNearPi(@InTestsUseFloats(3.14159f) float input) {
 }
 ```
 
-### Using `@InTestsUseDoubles`
+#### Using `@InTestsUseDoubles`
 
 The `@InTestsUseDoubles` annotation allows the user to recommend specific `double` values to use in tests.
 Sometimes this can be useful to control the values used for cosmetic reasons, but it can also be useful when Cover is unable to identify values to cover all cases.
@@ -254,11 +234,11 @@ public static boolean isNearPi(@InTestsUseDoubles(Math.PI) float input) {
 }
 ```
 
-## Interesting Value Annotations
+### Interesting Value Annotations
 
 Interesting value annotations allow users to promote existing fields and methods to be identified and used in particular roles by Diffblue Cover when writing tests.
 
-### Using `@InterestingTestFactory`
+#### Using `@InterestingTestFactory`
 
 Indicates the annotated method as a useful factory method for use in tests.
 Cover will automatically recognise factory methods that simply return a newly created instance, but may not identify more complicated factories.
