@@ -15,6 +15,33 @@ In turn this can be used by [Diffblue Cover](https://diffblue.com/cover) to tune
 Cover Annotations is published in the [Maven central repository](https://central.sonatype.com/artifact/com.diffblue.cover/cover-annotations/overview).
 In order to use the annotations simply add `cover-annotations` as a dependency to your project, for example copying the snippet for Maven or Gradle from the repository page.
 
+### Maven
+
+For installation into a Maven project the `provided` scope is recommended so that the annotations are available at compile and test time, but are not bundled with the project output:
+
+```
+<dependencies>
+    <dependency>
+        <groupId>com.diffblue.cover</groupId>
+        <artifactId>cover-annotations</artifactId>
+        <version>1.4.0</version>
+        <scope>provided</scope>
+    </dependency>
+</dependencies>
+```
+
+### Gradle
+
+For installation into a Gradle project the `compileOnly` and `testImplementation` configurations are recommended so that the annotations are available at compile and test time, but are not bundled with the project output:
+
+```
+dependencies {
+    compileOnly("com.diffblue.cover:cover-annotations:1.4.0")
+
+    testImplementation("com.diffblue.cover:cover-annotations:1.4.0")    
+}
+```
+
 ## Usage
 
 Annotations placed on packages affect tests for all classes and methods under test in that package.
