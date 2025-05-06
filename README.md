@@ -24,7 +24,7 @@ For installation into a Maven project the `provided` scope is recommended so tha
     <dependency>
         <groupId>com.diffblue.cover</groupId>
         <artifactId>cover-annotations</artifactId>
-        <version>1.3.0</version>
+        <version>1.4.0</version>
         <scope>provided</scope>
     </dependency>
 </dependencies>
@@ -36,9 +36,9 @@ For installation into a Gradle project the `compileOnly` and `testImplementation
 
 ```
 dependencies {
-    compileOnly("com.diffblue.cover:cover-annotations:1.3.0")
+    compileOnly("com.diffblue.cover:cover-annotations:1.4.0")
 
-    testImplementation("com.diffblue.cover:cover-annotations:1.3.0")    
+    testImplementation("com.diffblue.cover:cover-annotations:1.4.0")    
 }
 ```
 
