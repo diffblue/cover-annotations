@@ -14,8 +14,16 @@
  */
 package com.diffblue.cover.annotations;
 
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.RetentionPolicy.SOURCE;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
 /**
- * Empty interface, identifies a test as managed by Diffblue. Tests annotated with this can be
- * removed or updated by Diffblue and so should not be adjusted manually.
+ * Annotation to identify a test as managed by Diffblue. Tests annotated with this can be removed or
+ * updated by Diffblue and so should not be adjusted manually.
  */
-public interface ManagedByDiffblue {}
+@Retention(SOURCE)
+@Target(METHOD)
+public @interface ManagedByDiffblue {}
