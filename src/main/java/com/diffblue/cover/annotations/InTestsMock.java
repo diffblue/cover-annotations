@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Diffblue Limited.
+ * Copyright 2024-2025 Diffblue Limited.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ import static com.diffblue.cover.annotations.MockDecision.RECOMMENDED;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.PACKAGE;
 import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.CLASS;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
@@ -32,29 +32,53 @@ import java.lang.annotation.Target;
  *
  * @since Diffblue Cover 2024.04.02
  */
-@Retention(CLASS)
+@Retention(RUNTIME)
 @Target({PACKAGE, TYPE, METHOD})
 @Repeatable(InTestsMock.Repeatable.class)
 public @interface InTestsMock {
 
   /** Collects multiple {@link InTestsMock} annotations. */
-  @Retention(CLASS)
+  @Retention(RUNTIME)
   @Target({PACKAGE, TYPE, METHOD})
   @interface Repeatable {
 
-    /**
-     * @return the repeated {@link InTestsMock} annotations.
-     */
+    /** @return the repeated {@link InTestsMock} annotations. */
     InTestsMock[] value();
   }
 
-  /**
-   * @return the classes to mock (or not).
-   */
+  /** @return the classes to mock (or not). */
   Class<?>[] value();
 
-  /**
-   * @return the mocking decision to apply.
-   */
+  /** @return the mocking decision to apply. */
   MockDecision decision() default RECOMMENDED;
+
+  /** @return name of method to mock */
+  String method() default "";
+
+  /** @return boolean value or values to return from the {@link #method()} */
+  boolean[] booleanReturnValues() default {};
+
+  /** @return byte value or values to return from the {@link #method()} */
+  byte[] byteReturnValues() default {};
+
+  /** @return char value or values to return from the {@link #method()} */
+  char[] charReturnValues() default {};
+
+  /** @return float value or values to return from the {@link #method()} */
+  float[] floatReturnValues() default {};
+
+  /** @return double value or values to return from the {@link #method()} */
+  double[] doubleReturnValues() default {};
+
+  /** @return int value or values to return from the {@link #method()} */
+  int[] intReturnValues() default {};
+
+  /** @return long value or values to return from the {@link #method()} */
+  long[] longReturnValues() default {};
+
+  /** @return short value or values to return from the {@link #method()} */
+  short[] shortReturnValues() default {};
+
+  /** @return String value or values to return from the {@link #method()} */
+  String[] stringReturnValues() default {};
 }
