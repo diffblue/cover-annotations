@@ -81,4 +81,10 @@ public @interface InTestsMock {
 
   /** @return String value or values to return from the {@link #method()} */
   String[] stringReturnValues() default {};
+
+  /**
+   * @return name of the factory method used to create the object returned by the mocked {@link
+   *     #method()}
+   */
+  String returnValueFactory() default "";
 }
