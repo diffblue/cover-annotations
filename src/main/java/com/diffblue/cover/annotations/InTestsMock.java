@@ -20,6 +20,7 @@ import static java.lang.annotation.ElementType.PACKAGE;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+import com.diffblue.cover.annotations.exceptions.NoException;
 import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -87,4 +88,16 @@ public @interface InTestsMock {
    *     #method()}
    */
   String returnValueFactory() default "";
+
+  /**
+   * @return exception type to throw when the mocked {@link #method()} is called. Defaults to {@link
+   *     NoException} to indicate no exception should be thrown.
+   */
+  Class<? extends Throwable> throwException() default NoException.class;
+
+  /**
+   * @return fully qualified name of the factory method used to create the exception to throw when
+   *     the mocked {@link #method()} is called.
+   */
+  String throwExceptionFactory() default "";
 }
