@@ -24,7 +24,7 @@ jobs:
         java-version: '8'
 
     - name: Run Spotless Check
-      run: mvn spotless:check
+      run: mvn --batch-mode spotless:check
 
     - name: Compile Project
-      run: mvn compile        
+      run: mvn --batch-mode compile
