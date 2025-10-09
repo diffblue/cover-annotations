@@ -343,3 +343,17 @@ public class CarPainter {
 }
 ```
 
+### Experimental Annotations
+
+Experimental annotations should not be used in a production setting, but are
+included to allow Diffblue to perform experiments with new features.
+
+> [!NOTE]
+> The annotations in the `experimental` package can change at any time.
+>
+> Do not rely on them in production code!
+
+#### Using `@InTestsUseLLM`
+
+Indicates that LLMs can be used in this context.
+
