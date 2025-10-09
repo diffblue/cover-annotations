@@ -301,3 +301,45 @@ class User {
 }
 ```
 
+#### Using `@InTestsUseFactories`
+
+The `@InTestsUseFactories` annotation allows the user to recommend specific factories to use in tests.
+This can be useful if Cover is not using the correct factory methods to construct objects.
+
+Consider the following example. In the test sources, create a class `Factory` that is responsible for constructing
+`Car` objects from some external resource (such as a JSON file, or the like). If we annotate the `CarPainter`'s
+`changeColor` method with `@InTestsUseFactories` pointing to the `Factory`'s `getFirstCar` method, Cover will attempt
+to use that to create instances of `Car` objects for testing.
+
+You are able to specify multiple method names in the annotation, as well as specifying it multiple times (you could
+specify a `ColorFactory` for instance).
+
+```java
+public class CarFactory {
+    private static final CarFactory INSTANCE = new CarFactory();
+    private final List<Car> cars;
+
+    private CarFactory() {
+        // initialize the list of cars from some resource
+    }
+
+    public static Car getFirstCar() {
+        return INSTANCE.cars.get(0);
+    }
+    
+    // and so on...
+}
+```
+
+```java
+import com.diffblue.cover.annotations.InTestsUseFactories;
+
+public class CarPainter {
+    @InTestsUseFactories(className = "CarFactory", methodNames = {"getFirstCar"})
+    public static Car changeColor(Car car, Color color) {
+        car.setColor(color);
+        return car;
+    }
+}
+```
+
