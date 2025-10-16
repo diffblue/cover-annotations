@@ -24,7 +24,7 @@ For installation into a Maven project the `provided` scope is recommended so tha
     <dependency>
         <groupId>com.diffblue.cover</groupId>
         <artifactId>cover-annotations</artifactId>
-        <version>1.7.0</version>
+        <version>1.8.0</version>
         <scope>provided</scope>
     </dependency>
 </dependencies>
@@ -36,9 +36,9 @@ For installation into a Gradle project the `compileOnly` and `testImplementation
 
 ```
 dependencies {
-    compileOnly("com.diffblue.cover:cover-annotations:1.7.0")
+    compileOnly("com.diffblue.cover:cover-annotations:1.8.0")
 
-    testImplementation("com.diffblue.cover:cover-annotations:1.7.0")    
+    testImplementation("com.diffblue.cover:cover-annotations:1.8.0")    
 }
 ```
 
@@ -342,4 +342,18 @@ public class CarPainter {
     }
 }
 ```
+
+### Experimental Annotations
+
+Experimental annotations should not be used in a production setting, but are
+included to allow Diffblue to perform experiments with new features.
+
+> [!NOTE]
+> The annotations in the `experimental` package can change at any time.
+>
+> Do not rely on them in production code!
+
+#### Using `@InTestsUseLLM`
+
+Indicates that LLMs can be used in this context.
 
