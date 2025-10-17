@@ -24,7 +24,7 @@ For installation into a Maven project the `provided` scope is recommended so tha
     <dependency>
         <groupId>com.diffblue.cover</groupId>
         <artifactId>cover-annotations</artifactId>
-        <version>1.7.0</version>
+        <version>1.8.0</version>
         <scope>provided</scope>
     </dependency>
 </dependencies>
@@ -36,9 +36,9 @@ For installation into a Gradle project the `compileOnly` and `testImplementation
 
 ```
 dependencies {
-    compileOnly("com.diffblue.cover:cover-annotations:1.7.0")
+    compileOnly("com.diffblue.cover:cover-annotations:1.8.0")
 
-    testImplementation("com.diffblue.cover:cover-annotations:1.7.0")    
+    testImplementation("com.diffblue.cover:cover-annotations:1.8.0")    
 }
 ```
 
@@ -300,4 +300,60 @@ class User {
     }
 }
 ```
+
+#### Using `@InTestsUseFactories`
+
+The `@InTestsUseFactories` annotation allows the user to recommend specific factories to use in tests.
+This can be useful if Cover is not using the correct factory methods to construct objects.
+
+Consider the following example. In the test sources, create a class `Factory` that is responsible for constructing
+`Car` objects from some external resource (such as a JSON file, or the like). If we annotate the `CarPainter`'s
+`changeColor` method with `@InTestsUseFactories` pointing to the `Factory`'s `getFirstCar` method, Cover will attempt
+to use that to create instances of `Car` objects for testing.
+
+You are able to specify multiple method names in the annotation, as well as specifying it multiple times (you could
+specify a `ColorFactory` for instance).
+
+```java
+public class CarFactory {
+    private static final CarFactory INSTANCE = new CarFactory();
+    private final List<Car> cars;
+
+    private CarFactory() {
+        // initialize the list of cars from some resource
+    }
+
+    public static Car getFirstCar() {
+        return INSTANCE.cars.get(0);
+    }
+    
+    // and so on...
+}
+```
+
+```java
+import com.diffblue.cover.annotations.InTestsUseFactories;
+
+public class CarPainter {
+    @InTestsUseFactories(className = "CarFactory", methodNames = {"getFirstCar"})
+    public static Car changeColor(Car car, Color color) {
+        car.setColor(color);
+        return car;
+    }
+}
+```
+
+### Experimental Annotations
+
+Experimental annotations should not be used in a production setting, but are
+included to allow Diffblue to perform experiments with new features.
+
+> [!NOTE]
+> The annotations in the `experimental` package can change at any time.
+>
+> Do not rely on them in production code!
+
+#### Using `@InTestsUseLLM`
+
+Indicates that LLMs can be used in this context.
 
