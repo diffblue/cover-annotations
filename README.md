@@ -27,7 +27,7 @@ compile and test time, but are not bundled with the project output:
     <dependency>
         <groupId>com.diffblue.cover</groupId>
         <artifactId>cover-annotations</artifactId>
-        <version>1.8.0</version>
+        <version>1.9.0</version>
         <scope>provided</scope>
     </dependency>
 </dependencies>
@@ -40,9 +40,9 @@ the annotations are available at compile and test time, but are not bundled with
 
 ```
 dependencies {
-    compileOnly("com.diffblue.cover:cover-annotations:1.8.0")
+    compileOnly("com.diffblue.cover:cover-annotations:1.9.0")
 
-    testImplementation("com.diffblue.cover:cover-annotations:1.8.0")    
+    testImplementation("com.diffblue.cover:cover-annotations:1.9.0")    
 }
 ```
 
