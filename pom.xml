@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright 2024 Diffblue Limited.
+  ~ Copyright 2024 - 2026 Diffblue Limited.
   ~ Licensed under the Apache License, Version 2.0 (the "License").
   ~ You may not use this file except in compliance with the License.
   ~ A copy of the License is located at
@@ -16,7 +16,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diffblue.cover</groupId>
   <artifactId>cover-annotations</artifactId>
-  <version>1.8.0</version>
+  <version>1.9.0</version>
   <packaging>jar</packaging>
 
   <name>Cover Annotations</name>
