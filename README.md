@@ -36,9 +36,9 @@ For installation into a Gradle project the `compileOnly` and `testImplementation
 
 ```
 dependencies {
-    compileOnly("com.diffblue.cover:cover-annotations:1.8.0")
+    compileOnly("com.diffblue.cover:cover-annotations:1.9.1")
 
-    testImplementation("com.diffblue.cover:cover-annotations:1.8.0")    
+    testImplementation("com.diffblue.cover:cover-annotations:1.9.1")    
 }
 ```
 
